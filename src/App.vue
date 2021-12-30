@@ -30,13 +30,14 @@ import Prazo from "./components/types/Prazo.vue"
 import Ocorrencia from "./components/types/Ocorrencia.vue"
 import Phone from "./components/types/Phone.vue"
 import Email from "./components/types/Email.vue"
+import CurrentDate from "./components/types/CurrentDate.vue"
 
 window._ = require("lodash");
 
 export default {
   name: 'App',
   components: {
-    CurrentTime,Protocolo, Prazo, Ocorrencia, Phone, Email
+    CurrentTime,Protocolo, Prazo, Ocorrencia, Phone, Email, CurrentDate
   },
   data(){
       return {
@@ -75,9 +76,7 @@ export default {
       },
   },
   created(){
-      this.opcoes.push({name: 'Protocolo e Prazo', text: `Segue protocolo {{protocolo}}  para acompanhar o andamento de sua solicitação. Documentos anexados.
-Prazo de conclusão data: {{prazo}}. Para resposta desse protocolo, deve entrar em contato com a central de atendimento.`, fields:[{name:'protocolo', label: 'Protocolo'},{name:'prazo', label:"Prazo", plus:5}]});
-      this.opcoes.push({name: 'Opcao 02', text: `Prezados,
+      this.opcoes.push({name:'Tentativa de contato', type: 'Cartão',fields: [{name:'current-time'},{name:'protocolo'},{name:'ocorrencia'},{name:'phone'},{name:'email', default: 'Sem e-mail'}], text: `Prezados,
 
 Tentativa de contato sem sucesso às {{current-time}}, impossibilitando esclarecimento sobre Protocolo: {{protocolo}} Ocorrência: {{ocorrencia}}.
 {{phone}} - cliente atendeu e desligou
@@ -86,7 +85,14 @@ Tentativa de contato sem sucesso às {{current-time}}, impossibilitando esclarec
 Caso cliente entre em contato, informar que dados não foram alterados pois cliente não possui cadastro no App. Sondar qual erro está acontecendo e abrir demanda correspondente. Caso cliente não esteja recebendo token, abrir demanda "Dificuldade de abertura de conta", solicitando exclusão dos dados para que cliente consiga solicitar nova conta.
 
 {{phone}}
-Izabel Regina de Faria Bastos`, fields:[{name:'current-time'},{name:'protocolo'},{name:'ocorrencia'},{name:'phone'},{name:'email', default: 'Sem e-mail'}]});
+Izabel Regina de Faria Bastos`});
+this.opcoes.push({name:'Andamento solicitação', type: 'Cartão',fields: [{name:'protocolo'},{name:'prazo', plus:5}], text: `Segue protocolo {{protocolo}}  para acompanhar o andamento de sua solicitação. Documentos anexados.
+Prazo de conclusão data: {{prazo}}. Para resposta desse protocolo, deve entrar em contato com a central de atendimento.`});
+this.opcoes.push({name:'Cartão Solicitado', type: 'Cartão',fields: [{name:'current-date'},{name:'protocolo'},,,], text: `Prezada cliente, Seu endereço está atualizado e cartão e senha foram emitidos dia {{current-date}}. Protocolo: {{protocolo}} Prazo de entrega é de 7 dias úteis após a presente data para recebimento do cartão e senha.`});
+this.opcoes.push({name:'Alteração de endereço', type: 'Cartão',fields: [], text: `Cliente solicita alteração de endereço. Documentos anexados. Obrigada. 
+`});
+this.opcoes.push({name:'Exclusão de impedimento', type: 'Cartão',fields: [], text: `Cliente deseja exclusão de impedimento. Documentos anexados. Obrigada.`});
+
   },
   methods:{
       FilteredOption(component){

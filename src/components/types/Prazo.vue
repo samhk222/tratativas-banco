@@ -1,5 +1,5 @@
 <template> <div class="col-md-3">
-    <label for="">Prazo</label>
+    <label >Prazo ({{this.opcao.plus}} dias)</label>
     <input v-mask="'##/##/####'" type="text" v-model="field" class="form-control" @keyup="emitChange">
     </div> </template>
 <script>
